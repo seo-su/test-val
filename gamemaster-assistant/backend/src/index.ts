@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import routes from './routes/index.js';
 
@@ -37,13 +38,11 @@ if (isProduction) {
 
   let publicPath = publicPaths[0];
   for (const p of publicPaths) {
-    try {
-      if (require('fs').existsSync(p)) {
-        publicPath = p;
-        console.log(`Serving static files from: ${p}`);
-        break;
-      }
-    } catch {}
+    if (fs.existsSync(p)) {
+      publicPath = p;
+      console.log(`Serving static files from: ${p}`);
+      break;
+    }
   }
 
   app.use(express.static(publicPath));

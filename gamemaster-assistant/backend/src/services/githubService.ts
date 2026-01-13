@@ -23,7 +23,7 @@ export async function fetchContentStructure(): Promise<ContentStructure> {
   try {
     // Fetch root directory
     const response = await fetch(GITHUB_API_BASE);
-    const contents: GitHubContent[] = await response.json();
+    const contents = (await response.json()) as GitHubContent[];
 
     for (const item of contents) {
       if (item.type === 'dir') {
@@ -66,7 +66,7 @@ async function parseAct(actName: string, actPath: string): Promise<Act> {
 
   try {
     const response = await fetch(`${GITHUB_API_BASE}/${actPath}`);
-    const contents: GitHubContent[] = await response.json();
+    const contents = (await response.json()) as GitHubContent[];
 
     for (const item of contents) {
       if (item.type === 'dir' && item.name.startsWith('Arc')) {
@@ -96,7 +96,7 @@ async function parseDirectory(dirPath: string, parentName: string): Promise<Chap
 
   try {
     const response = await fetch(`${GITHUB_API_BASE}/${dirPath}`);
-    const contents: GitHubContent[] = await response.json();
+    const contents = (await response.json()) as GitHubContent[];
 
     for (const item of contents) {
       if (item.type === 'file' && item.name.endsWith('.md')) {
