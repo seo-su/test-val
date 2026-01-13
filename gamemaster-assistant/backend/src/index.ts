@@ -1,9 +1,15 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import routes from './routes/index.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const isProduction = process.env.NODE_ENV === 'production';
 
 // Middleware
 app.use(cors());
@@ -19,38 +25,49 @@ app.use((req, res, next) => {
 // API routes
 app.use('/api', routes);
 
-// Root endpoint
-app.get('/', (req, res) => {
-  res.json({
-    name: 'GameMaster Assistant API',
-    version: '1.0.0',
-    description: 'API for D&D GameMaster session preparation and note-taking',
-    endpoints: {
-      health: 'GET /api/health',
-      chapters: {
-        list: 'GET /api/chapters',
-        content: 'GET /api/chapters/content?path=<path>',
-        synthesize: 'POST /api/chapters/synthesize',
-        search: 'GET /api/chapters/search?q=<query>'
-      },
-      templates: {
-        list: 'GET /api/templates',
-        get: 'GET /api/templates/:id',
-        create: 'POST /api/templates',
-        upload: 'POST /api/templates/upload',
-        delete: 'DELETE /api/templates/:id'
-      },
-      sessions: {
-        list: 'GET /api/sessions',
-        get: 'GET /api/sessions/:id',
-        create: 'POST /api/sessions',
-        update: 'PUT /api/sessions/:id',
-        delete: 'DELETE /api/sessions/:id',
-        export: 'GET /api/sessions/:id/export?format=<markdown|json>'
-      }
-    }
+// Serve static files in production
+if (isProduction) {
+  const publicPath = path.join(__dirname, '..', 'public');
+  app.use(express.static(publicPath));
+
+  // SPA fallback - serve index.html for all non-API routes
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(publicPath, 'index.html'));
   });
-});
+} else {
+  // Development: show API info
+  app.get('/', (req, res) => {
+    res.json({
+      name: 'GameMaster Assistant API',
+      version: '1.0.0',
+      description: 'API for D&D GameMaster session preparation and note-taking',
+      endpoints: {
+        health: 'GET /api/health',
+        chapters: {
+          list: 'GET /api/chapters',
+          content: 'GET /api/chapters/content?path=<path>',
+          synthesize: 'POST /api/chapters/synthesize',
+          search: 'GET /api/chapters/search?q=<query>'
+        },
+        templates: {
+          list: 'GET /api/templates',
+          get: 'GET /api/templates/:id',
+          create: 'POST /api/templates',
+          upload: 'POST /api/templates/upload',
+          delete: 'DELETE /api/templates/:id'
+        },
+        sessions: {
+          list: 'GET /api/sessions',
+          get: 'GET /api/sessions/:id',
+          create: 'POST /api/sessions',
+          update: 'PUT /api/sessions/:id',
+          delete: 'DELETE /api/sessions/:id',
+          export: 'GET /api/sessions/:id/export?format=<markdown|json>'
+        }
+      }
+    });
+  });
+}
 
 // Error handling middleware
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
