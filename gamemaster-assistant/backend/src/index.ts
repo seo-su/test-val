@@ -27,7 +27,25 @@ app.use('/api', routes);
 
 // Serve static files in production
 if (isProduction) {
-  const publicPath = path.join(__dirname, '..', 'public');
+  // Try multiple possible locations for static files
+  const publicPaths = [
+    path.join(__dirname, '..', 'public'),
+    path.join(__dirname, 'public'),
+    path.join(process.cwd(), 'public'),
+    path.join(process.cwd(), 'gamemaster-assistant', 'backend', 'public')
+  ];
+
+  let publicPath = publicPaths[0];
+  for (const p of publicPaths) {
+    try {
+      if (require('fs').existsSync(p)) {
+        publicPath = p;
+        console.log(`Serving static files from: ${p}`);
+        break;
+      }
+    } catch {}
+  }
+
   app.use(express.static(publicPath));
 
   // SPA fallback - serve index.html for all non-API routes
