@@ -69,14 +69,14 @@ app.use((req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(Number(PORT), '0.0.0.0', () => {
   console.log(`
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
 ║     🎲 GameMaster Assistant API                              ║
 ║     Version 1.0.0                                            ║
 ║                                                              ║
-║     Server running on http://localhost:${PORT}                  ║
+║     Server running on http://0.0.0.0:${PORT}                    ║
 ║                                                              ║
 ║     Ready to help prepare your D&D sessions!                 ║
 ║                                                              ║
