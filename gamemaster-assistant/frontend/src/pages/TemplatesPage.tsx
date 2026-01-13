@@ -7,7 +7,6 @@ import {
   FileText,
   Loader2,
   Eye,
-  Edit3,
   X,
   Check
 } from 'lucide-react';
