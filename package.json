@@ -1,0 +1,12 @@
+{
+  "name": "gamemaster-assistant-deploy",
+  "version": "1.0.0",
+  "scripts": {
+    "postinstall": "cd gamemaster-assistant/backend && npm install && cd ../frontend && npm install",
+    "build": "cd gamemaster-assistant/frontend && npm run build && cd ../backend && npm run build && mkdir -p public && cp -r ../frontend/dist/* public/",
+    "start": "cd gamemaster-assistant/backend && NODE_ENV=production node dist/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

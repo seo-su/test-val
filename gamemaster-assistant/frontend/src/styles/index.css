@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-dm-dark text-gray-100 font-body;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-medieval;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-dm-accent hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl;
+  }
+
+  .btn-secondary {
+    @apply bg-dm-blue hover:bg-dm-purple text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 border border-dm-gold/30;
+  }
+
+  .btn-ghost {
+    @apply text-dm-gold hover:text-dm-accent transition-colors duration-200;
+  }
+
+  .card {
+    @apply bg-dm-purple/80 backdrop-blur-sm rounded-xl border border-dm-gold/20 shadow-xl;
+  }
+
+  .card-hover {
+    @apply card hover:border-dm-gold/50 hover:shadow-dm-gold/10 transition-all duration-300 cursor-pointer;
+  }
+
+  .input {
+    @apply bg-dm-dark/50 border border-dm-gold/30 rounded-lg px-4 py-2 text-gray-100 placeholder-gray-500 focus:outline-none focus:border-dm-gold focus:ring-1 focus:ring-dm-gold/50;
+  }
+
+  .parchment {
+    @apply bg-dm-parchment text-dm-ink rounded-lg p-6;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+
+  .sidebar {
+    @apply bg-dm-purple border-r border-dm-gold/20 min-h-screen;
+  }
+
+  .nav-item {
+    @apply flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-dm-gold hover:bg-dm-blue/50 rounded-lg transition-all duration-200;
+  }
+
+  .nav-item.active {
+    @apply text-dm-gold bg-dm-blue/50 border-l-2 border-dm-gold;
+  }
+
+  /* Markdown content styling */
+  .markdown-content h1 {
+    @apply text-2xl font-medieval text-dm-gold mb-4 border-b border-dm-gold/30 pb-2;
+  }
+
+  .markdown-content h2 {
+    @apply text-xl font-medieval text-dm-accent mt-6 mb-3;
+  }
+
+  .markdown-content h3 {
+    @apply text-lg font-medieval text-gray-200 mt-4 mb-2;
+  }
+
+  .markdown-content p {
+    @apply mb-4 leading-relaxed;
+  }
+
+  .markdown-content ul {
+    @apply list-disc list-inside mb-4 space-y-1;
+  }
+
+  .markdown-content ol {
+    @apply list-decimal list-inside mb-4 space-y-1;
+  }
+
+  .markdown-content blockquote {
+    @apply border-l-4 border-dm-gold pl-4 italic text-gray-300 my-4;
+  }
+
+  .markdown-content code {
+    @apply bg-dm-dark/50 px-1.5 py-0.5 rounded text-dm-accent text-sm;
+  }
+
+  .markdown-content pre {
+    @apply bg-dm-dark/50 p-4 rounded-lg overflow-x-auto mb-4;
+  }
+
+  .markdown-content table {
+    @apply w-full border-collapse mb-4;
+  }
+
+  .markdown-content th {
+    @apply bg-dm-blue text-dm-gold font-medieval p-2 text-left border border-dm-gold/30;
+  }
+
+  .markdown-content td {
+    @apply p-2 border border-dm-gold/20;
+  }
+
+  .markdown-content strong {
+    @apply text-dm-gold font-semibold;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c9a227;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e94560;
+}
+
+/* Loading animation */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px #c9a227, 0 0 10px #c9a227, 0 0 15px #c9a227;
+  }
+  50% {
+    box-shadow: 0 0 10px #c9a227, 0 0 20px #c9a227, 0 0 30px #c9a227;
+  }
+}
+
+.loading-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
